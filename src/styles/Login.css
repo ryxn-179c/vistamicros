@@ -1,0 +1,245 @@
+/* Login.css - Diseño Alternativo */
+.login-container-alt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.login-card-alt {
+  display: flex;
+  width: 900px;
+  max-width: 95%;
+  height: 550px;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.login-image-section {
+  flex: 1;
+  background: linear-gradient(rgba(41, 128, 185, 0.7), rgba(41, 128, 185, 0.7)), 
+              url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+}
+
+.image-overlay {
+  color: white;
+}
+
+.image-overlay h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.image-overlay p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.login-form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f0f7ff;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon {
+  font-size: 30px;
+  color: #2980b9;
+}
+
+.form-header h3 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.login-form-alt {
+  width: 100%;
+}
+
+.input-group-alt {
+  margin-bottom: 25px;
+}
+
+.input-group-alt label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.input-icon {
+  margin-right: 8px;
+  color: #7f8c8d;
+}
+
+.input-group-alt input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.input-group-alt input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+  cursor: pointer;
+}
+
+.login-button-alt {
+  width: 100%;
+  padding: 14px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button-alt:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.button-icon {
+  margin-right: 10px;
+}
+
+.form-footer-alt {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.forgot-password {
+  display: block;
+  color: #3498db;
+  text-decoration: none;
+  margin-bottom: 20px;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+.divider {
+  position: relative;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #eee;
+  z-index: 1;
+}
+
+.divider span {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+  background: white;
+  color: #95a5a6;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.register-link {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+.register-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 5px;
+  transition: color 0.3s;
+}
+
+.register-link a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-card-alt {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .login-image-section {
+    padding: 30px 20px;
+    height: 200px;
+  }
+  
+  .image-overlay h2 {
+    font-size: 24px;
+  }
+  
+  .image-overlay p {
+    font-size: 14px;
+  }
+}
