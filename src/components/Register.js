@@ -34,113 +34,120 @@ function Register() {
         icon: 'success',
         confirmButtonColor: '#3498db',
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
+        background: '#fff',
+        color: '#2c3e50',
+        iconColor: '#3498db',
+        customClass: {
+          popup: 'custom-swal-popup'
+        }
       });
     } catch (error) {
       Swal.fire({
         title: 'Error',
         text: error.response?.data || error.message,
         icon: 'error',
-        confirmButtonColor: '#3498db'
+        confirmButtonColor: '#3498db',
+        background: '#fff',
+        color: '#2c3e50',
+        iconColor: '#e74c3c',
+        customClass: {
+          popup: 'custom-swal-popup'
+        }
       });
     }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-wrapper">
-        <div className="register-content">
-          <div className="register-illustration">
-            <img 
-              src="https://cdn-icons-png.flaticon.com/512/3534/3534124.png" 
-              alt="Register illustration"
-            />
+    <div className="login-container-alt">
+      <div className="login-card-alt">
+        {/* Parte izquierda con imagen */}
+        <div className="login-image-section">
+          <div className="image-overlay">
+            <h2>Únete a nuestra comunidad</h2>
+            <p>Crea una cuenta para acceder a todos los recursos</p>
+          </div>
+        </div>
+        
+        {/* Parte derecha con formulario */}
+        <div className="login-form-section">
+          <div className="form-header">
+            <h3>Crear Cuenta</h3>
           </div>
           
-          <div className="register-form-container">
-            <div className="register-logo">
-              <h2>Crea tu cuenta</h2>
-              <p>Completa el formulario para registrarte</p>
+          <form onSubmit={handleSubmit} className="login-form-alt">
+            <div className="input-group-alt">
+              <label htmlFor="username">
+                <FaUser className="input-icon" /> Usuario
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Ingresa tu nombre de usuario"
+                onChange={handleChange}
+                required
+              />
             </div>
             
-            <form onSubmit={handleSubmit} className="register-form">
-              <div className="input-group">
-                <label htmlFor="username">Usuario</label>
-                <div className="input-icon">
-                  <FaUser />
-                </div>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Ingresa tu nombre de usuario"
-                  onChange={handleChange}
-                  required
-                />
+            <div className="input-group-alt">
+              <label htmlFor="password">
+                <FaLock className="input-icon" /> Contraseña
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Crea una contraseña segura"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="input-group-alt">
+              <label htmlFor="securityQuestion">
+                <FaQuestionCircle className="input-icon" /> Pregunta de seguridad
+              </label>
+              <select
+                id="securityQuestion"
+                name="securityQuestion"
+                onChange={handleChange}
+                required
+                value={form.securityQuestion}
+              >
+                <option value="">Selecciona una pregunta</option>
+                {securityQuestions.map((question, index) => (
+                  <option key={index} value={question}>{question}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="input-group-alt">
+              <label htmlFor="securityAnswer">
+                <FaKey className="input-icon" /> Respuesta de seguridad
+              </label>
+              <input
+                id="securityAnswer"
+                name="securityAnswer"
+                type="text"
+                placeholder="Ingresa tu respuesta"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <button type="submit" className="login-button-alt">
+              <FaUserPlus className="button-icon" />
+              Registrarse
+            </button>
+            
+            <div className="form-footer-alt">
+              <div className="register-link">
+                <span>¿Ya tienes cuenta? </span>
+                <Link to="/">Inicia sesión</Link>
               </div>
-              
-              <div className="input-group">
-                <label htmlFor="password">Contraseña</label>
-                <div className="input-icon">
-                  <FaLock />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Crea una contraseña segura"
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div className="input-group">
-                <label htmlFor="securityQuestion">Pregunta de seguridad</label>
-                <div className="input-icon">
-                  <FaQuestionCircle />
-                </div>
-                <select
-                  id="securityQuestion"
-                  name="securityQuestion"
-                  className="security-question-select"
-                  onChange={handleChange}
-                  required
-                  value={form.securityQuestion}
-                >
-                  <option value="">Selecciona una pregunta</option>
-                  {securityQuestions.map((question, index) => (
-                    <option key={index} value={question}>{question}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className="input-group">
-                <label htmlFor="securityAnswer">Respuesta de seguridad</label>
-                <div className="input-icon">
-                  <FaKey />
-                </div>
-                <input
-                  id="securityAnswer"
-                  name="securityAnswer"
-                  type="text"
-                  placeholder="Ingresa tu respuesta"
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <button type="submit" className="register-button">
-                <FaUserPlus />
-                Registrarse
-              </button>
-              
-              <div className="form-footer">
-                <div className="form-links">
-                  <Link to="/">¿Ya tienes cuenta? Inicia sesión</Link>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

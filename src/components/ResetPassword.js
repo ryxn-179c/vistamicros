@@ -22,16 +22,28 @@ function ResetPassword() {
         title: '¡Contraseña actualizada!',
         text: 'Tu contraseña ha sido restablecida exitosamente',
         icon: 'success',
-        confirmButtonColor: '#e74c3c',
+        confirmButtonColor: '#3498db',
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
+        background: '#fff',
+        color: '#2c3e50',
+        iconColor: '#3498db',
+        customClass: {
+          popup: 'custom-swal-popup'
+        }
       });
     } catch (error) {
       Swal.fire({
         title: 'Error',
         text: error.response?.data || error.message,
         icon: 'error',
-        confirmButtonColor: '#e74c3c'
+        confirmButtonColor: '#3498db',
+        background: '#fff',
+        color: '#2c3e50',
+        iconColor: '#e74c3c',
+        customClass: {
+          popup: 'custom-swal-popup'
+        }
       });
     }
   };
@@ -45,88 +57,84 @@ function ResetPassword() {
   };
 
   return (
-    <div className="reset-container">
-      <div className="reset-wrapper">
-        <div className="reset-content">
-          <div className="reset-illustration">
-            <img 
-              src="https://images.vexels.com/media/users/3/128639/isolated/preview/62da532313d78f789be64c06811f39f0-restablecer-icon-svg.png" 
-              alt="Reset password illustration"
-            />
+    <div className="login-container-alt">
+      <div className="login-card-alt">
+        {/* Parte izquierda con imagen */}
+        <div className="login-image-section">
+          <div className="image-overlay">
+            <h2>Recupera tu acceso</h2>
+            <p>Restablece tu contraseña para volver a ingresar</p>
+          </div>
+        </div>
+        
+        {/* Parte derecha con formulario */}
+        <div className="login-form-section">
+          <div className="form-header">
+            <h3>Restablecer Contraseña</h3>
           </div>
           
-          <div className="reset-form-container">
-            <div className="reset-logo">
-              <h2>Restablecer contraseña</h2>
-              <p>Ingresa tus datos para recuperar el acceso</p>
+          <form onSubmit={handleSubmit} className="login-form-alt">
+            <div className="input-group-alt">
+              <label htmlFor="username">
+                <FaUser className="input-icon" /> Usuario
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Ingresa tu nombre de usuario"
+                value={form.username}
+                onChange={handleChange}
+                required
+              />
             </div>
             
-            <form onSubmit={handleSubmit} className="reset-form">
-              <div className="input-group">
-                <label htmlFor="username">Usuario</label>
-                <div className="input-icon">
-                  <FaUser />
+            <div className="input-group-alt">
+              <label htmlFor="securityAnswer">
+                <FaKey className="input-icon" /> Respuesta de seguridad
+              </label>
+              <input
+                id="securityAnswer"
+                name="securityAnswer"
+                type="text"
+                placeholder="Ingresa tu respuesta de seguridad"
+                value={form.securityAnswer}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="input-group-alt">
+              <label htmlFor="newPassword">
+                <FaLock className="input-icon" /> Nueva contraseña
+              </label>
+              <input
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                placeholder="Crea una nueva contraseña"
+                value={form.newPassword}
+                onChange={handleChange}
+                required
+              />
+              {form.newPassword && (
+                <div className="password-strength">
+                  Fortaleza: <span className={`strength-${getPasswordStrength().toLowerCase()}`}>{getPasswordStrength()}</span>
                 </div>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Ingresa tu nombre de usuario"
-                  value={form.username}
-                  onChange={handleChange}
-                  required
-                />
+              )}
+            </div>
+            
+            <button type="submit" className="login-button-alt">
+              <FaRedoAlt className="button-icon" />
+              Restablecer contraseña
+            </button>
+            
+            <div className="form-footer-alt">
+              <div className="register-link">
+                <Link to="/">Volver al inicio de sesión</Link>
               </div>
-              
-              <div className="input-group">
-                <label htmlFor="securityAnswer">Respuesta de seguridad</label>
-                <div className="input-icon">
-                  <FaKey />
-                </div>
-                <input
-                  id="securityAnswer"
-                  name="securityAnswer"
-                  type="text"
-                  placeholder="Ingresa tu respuesta de seguridad"
-                  value={form.securityAnswer}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div className="input-group">
-                <label htmlFor="newPassword">Nueva contraseña</label>
-                <div className="input-icon">
-                  <FaLock />
-                </div>
-                <input
-                  id="newPassword"
-                  name="newPassword"
-                  type="password"
-                  placeholder="Crea una nueva contraseña"
-                  value={form.newPassword}
-                  onChange={handleChange}
-                  required
-                />
-                {form.newPassword && (
-                  <div className="password-strength">
-                    Fortaleza: {getPasswordStrength()}
-                  </div>
-                )}
-              </div>
-              
-              <button type="submit" className="reset-button">
-                <FaRedoAlt />
-                Restablecer contraseña
-              </button>
-              
-              <div className="form-footer">
-                <div className="form-links">
-                  <Link to="/">Volver al inicio de sesión</Link>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
