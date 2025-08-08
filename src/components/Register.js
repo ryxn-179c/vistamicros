@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { registerUser } from '../api/authApi';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { FaUser, FaLock, FaQuestionCircle, FaKey, FaUserPlus } from 'react-icons/fa';
+import { FaUser, FaLock, FaQuestionCircle, FaKey, FaUserPlus, FaPen } from 'react-icons/fa';
 import '../styles/Register.css';
 
 function Register() {
@@ -10,8 +10,11 @@ function Register() {
     username: '',
     password: '',
     securityQuestion: '',
-    securityAnswer: ''
+    securityAnswer: '',
+    customQuestion: ''
   });
+
+  const [showCustomQuestion, setShowCustomQuestion] = useState(false);
 
   // Preguntas de seguridad predefinidas
   const securityQuestions = [
@@ -19,15 +22,72 @@ function Register() {
     "¿Cuál es tu ciudad de nacimiento?",
     "¿Cuál es el nombre de tu escuela primaria?",
     "¿Cuál es tu comida favorita?",
-    "¿Cuál es el segundo nombre de tu madre?"
+    "¿Cuál es el segundo nombre de tu madre?",
+    "Otra pregunta personalizada"
   ];
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    // Si cambia la pregunta de seguridad, verificar si es "Otra pregunta personalizada"
+    if (name === "securityQuestion") {
+      const isCustom = value === "Otra pregunta personalizada";
+      setShowCustomQuestion(isCustom);
+      
+      // Si no es personalizada, limpiar el campo de pregunta personalizada
+      if (!isCustom) {
+        setForm(prev => ({
+          ...prev,
+          securityQuestion: value,
+          customQuestion: ''
+        }));
+      } else {
+        setForm(prev => ({
+          ...prev,
+          securityQuestion: value
+        }));
+      }
+    } else {
+      setForm(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Determinar la pregunta final a enviar
+    const finalQuestion = showCustomQuestion ? form.customQuestion : form.securityQuestion;
+    
+    // Validar que se haya proporcionado una pregunta
+    if (!finalQuestion || finalQuestion.trim() === '') {
+      Swal.fire({
+        title: 'Campo requerido',
+        text: 'Por favor, proporciona una pregunta de seguridad',
+        icon: 'warning',
+        confirmButtonColor: '#3498db',
+        background: '#fff',
+        color: '#2c3e50',
+        iconColor: '#f39c12',
+        customClass: {
+          popup: 'custom-swal-popup'
+        }
+      });
+      return;
+    }
+    
     try {
-      await registerUser(form);
+      // Crear objeto con los datos finales
+      const userData = {
+        username: form.username,
+        password: form.password,
+        securityQuestion: finalQuestion,
+        securityAnswer: form.securityAnswer
+      };
+      
+      await registerUser(userData);
       Swal.fire({
         title: '¡Registro exitoso!',
         text: 'Usuario creado correctamente',
@@ -86,6 +146,7 @@ function Register() {
                 type="text"
                 placeholder="Ingresa tu nombre de usuario"
                 onChange={handleChange}
+                value={form.username}
                 required
               />
             </div>
@@ -100,6 +161,7 @@ function Register() {
                 type="password"
                 placeholder="Crea una contraseña segura"
                 onChange={handleChange}
+                value={form.password}
                 required
               />
             </div>
@@ -112,8 +174,8 @@ function Register() {
                 id="securityQuestion"
                 name="securityQuestion"
                 onChange={handleChange}
-                required
                 value={form.securityQuestion}
+                required
               >
                 <option value="">Selecciona una pregunta</option>
                 {securityQuestions.map((question, index) => (
@@ -121,6 +183,24 @@ function Register() {
                 ))}
               </select>
             </div>
+            
+            {/* Campo para pregunta personalizada */}
+            {showCustomQuestion && (
+              <div className="input-group-alt">
+                <label htmlFor="customQuestion">
+                  <FaPen className="input-icon" /> Tu pregunta personalizada
+                </label>
+                <input
+                  id="customQuestion"
+                  name="customQuestion"
+                  type="text"
+                  placeholder="Escribe tu propia pregunta de seguridad"
+                  onChange={handleChange}
+                  value={form.customQuestion}
+                  required={showCustomQuestion}
+                />
+              </div>
+            )}
             
             <div className="input-group-alt">
               <label htmlFor="securityAnswer">
@@ -132,6 +212,7 @@ function Register() {
                 type="text"
                 placeholder="Ingresa tu respuesta"
                 onChange={handleChange}
+                value={form.securityAnswer}
                 required
               />
             </div>

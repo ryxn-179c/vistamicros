@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://microlibro.somee.com/api/LibroMaterial'; // Reemplaza con tu URL real
+const API_URL = 'https://microlibro.somee.com/api/LibroMaterial';
 
-// Función para formatear fechas para el backend
 const formatDateForBackend = (dateString) => {
   if (!dateString) return null;
   const localDate = new Date(dateString);

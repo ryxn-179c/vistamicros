@@ -1,11 +1,9 @@
-// authApi.js
 import axios from 'axios';
 
 const API_URL = 'https://microauth.somee.com/api/Auth';
 
 export const loginUser = async (credentials) => {
   const response = await axios.post(`${API_URL}/login`, credentials);
-  // Guardar tokens en localStorage
   localStorage.setItem('token', response.data.token);
   localStorage.setItem('refreshToken', response.data.refreshToken);
   return response;
@@ -22,11 +20,14 @@ export const resetPassword = async (resetData) => {
 export const refreshToken = async () => {
   try {
     const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
-      throw new Error('No hay refresh token disponible');
+    const username = localStorage.getItem('username'); // asegurarte que esté guardado
+
+    if (!refreshToken || !username) {
+      throw new Error('No hay refresh token o usuario disponible');
     }
 
     const response = await axios.post(`${API_URL}/refresh-token`, { 
+      username, 
       refreshToken 
     }, {
       headers: {
@@ -41,6 +42,6 @@ export const refreshToken = async () => {
     return response.data;
   } catch (error) {
     console.error('Error al refrescar token:', error);
-    throw error; // Re-lanzamos el error para manejarlo en el componente
+    throw error;
   }
 };

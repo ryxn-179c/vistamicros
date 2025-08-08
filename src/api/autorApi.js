@@ -15,7 +15,6 @@ export const getAutores = async () => {
 export const createAutor = async (autorData) => {
   const token = localStorage.getItem('token');
   
-  // Prepara los datos con la fecha en formato correcto
   const payload = {
     nombre: autorData.nombre,
     apellido: autorData.apellido,
@@ -30,14 +29,11 @@ export const createAutor = async (autorData) => {
   });
 };
 
-// Función para formatear la fecha correctamente
 const formatDateForBackend = (dateString) => {
   if (!dateString) return null;
   
-  // Crea un objeto Date a partir del string (el navegador lo interpreta como local)
   const localDate = new Date(dateString);
   
-  // Convierte a UTC y formatea como ISO string
   const utcDate = new Date(
     Date.UTC(
       localDate.getFullYear(),

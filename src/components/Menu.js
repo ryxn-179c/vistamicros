@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FaBook, FaPenAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaBook, FaPenAlt, FaSignOutAlt, FaUser, FaKey } from 'react-icons/fa';
 import '../styles/Menu.css';
 
 const Menu = ({ username }) => {
@@ -43,6 +43,18 @@ const Menu = ({ username }) => {
                 <FaPenAlt />
               </span>
               <span className="menu-label">Autores</span>
+            </button>
+          </li>
+          {/* Nuevo apartado: Tokens de Sesión */}
+          <li>
+            <button 
+              className="menu-item" 
+              onClick={() => navigate('/menu/tokens')}
+            >
+              <span className="menu-icon">
+                <FaKey />
+              </span>
+              <span className="menu-label">Tokens de Sesión</span>
             </button>
           </li>
         </ul>

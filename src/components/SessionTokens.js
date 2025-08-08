@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaKey, FaCopy, FaInfoCircle, FaCheck, FaArrowLeft, FaSync } from 'react-icons/fa';
 import Swal from 'sweetalert2';
@@ -12,11 +12,6 @@ const SessionTokens = () => {
   const [copiedRefreshToken, setCopiedRefreshToken] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const navigate = useNavigate();
-
-  // Forzar actualización de la ruta al cargar el componente
-  useEffect(() => {
-    window.history.replaceState(null, '', '/menu/tokens');
-  }, []);
 
   const copyToClipboard = (text, type) => {
     if (!text) return;
@@ -35,7 +30,7 @@ const SessionTokens = () => {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      const { data } = await refreshTokenAPI();
+      const data = await refreshTokenAPI();
       
       if (!data.token || !data.refreshToken) {
         throw new Error('Respuesta inválida del servidor');

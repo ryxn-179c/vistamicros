@@ -222,15 +222,6 @@
   }
 }
 
-/* Ocultar elementos de tokens */
-.token-info,
-.tokens-display,
-.token-container,
-[class*="token"],
-[id*="token"] {
-  display: none !important;
-}
-
 /* Área de contenido principal */
 .main-content {
   margin-left: 280px;

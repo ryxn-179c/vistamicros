@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import Menu from './Menu';
-import { Outlet } from 'react-router-dom';
-import SessionTokens from './SessionTokens';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaBars, FaTimes, FaKey } from 'react-icons/fa';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
   const username = localStorage.getItem('username') || 'Usuario';
-  const [showTokens, setShowTokens] = useState(false);
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const toggleTokens = () => setShowTokens(prev => !prev);
   const toggleMenu = () => setIsMenuCollapsed(prev => !prev);
 
   return (
     <div className="dashboard-container">
-      {/* Menú lateral con nuevo diseño */}
       <div className={`sidebar ${isMenuCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
           <div className="user-info">
@@ -33,16 +31,15 @@ const Dashboard = () => {
             {isMenuCollapsed ? <FaBars /> : <FaTimes />}
           </button>
         </div>
-        
-        <Menu 
-          username={username} 
-          onToggleTokens={toggleTokens} 
-          isCollapsed={isMenuCollapsed}
-        />
-        
+
+        <Menu username={username} isCollapsed={isMenuCollapsed} />
+
         {!isMenuCollapsed && (
           <div className="sidebar-footer">
-            <button className="token-btn" onClick={toggleTokens}>
+            <button
+              className="token-btn"
+              onClick={() => navigate('/menu/tokens')}
+            >
               <FaKey className="token-icon" />
               <span>Tokens de Sesión</span>
             </button>
@@ -50,13 +47,12 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Contenido principal */}
       <div className={`dashboard-content ${isMenuCollapsed ? 'expanded' : ''}`}>
         <div className="content-header">
           <div className="breadcrumb">
             <span>Dashboard</span>
             <span>/</span>
-            <span>Inicio</span>
+            <span>{location.pathname.split('/')[2] || 'Inicio'}</span>
           </div>
           <div className="header-actions">
             <div className="notification-badge">
@@ -68,9 +64,10 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
+
+        {/* RENDERIZA RUTAS HIJAS */}
         <div className="content-container">
-          {showTokens ? <SessionTokens /> : <Outlet />}
+          <Outlet />
         </div>
       </div>
     </div>
